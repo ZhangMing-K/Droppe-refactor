@@ -16,3 +16,4 @@ export const ADD_TO_FAVORITES = "Add to favorites";
 export const RATING = "Rating:";
 export const PRICE = "Price:";
 export const DESCRIPTION = "Description:";
+export const PRODUCT_TITLE = "Product title: *";
