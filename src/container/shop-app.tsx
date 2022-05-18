@@ -30,22 +30,25 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
     }
 
     componentDidMount() {
-        fetch(Constants.API_PRODUCTS_LINK).then((response) => {
-            let jsonResponse = response.json();
+        this.fetchProducts();
+    }
 
-            jsonResponse.then((rawData) => {
-                let productsResponse = Array.isArray(rawData) ? rawData : [];
-
+    fetchProducts = () => {
+        fetch(Constants.API_PRODUCTS_LINK)
+            .then(response => response.json())
+            .then(rawData => {
+                const productsResponse = Array.isArray(rawData) ? rawData : [];
                 this.setState({
                     products: productsResponse,
                     prodCount: productsResponse.length,
                 });
-            });
-
-            jsonResponse.catch(() => {
-                console.log("Api Call Issue");
-            });
-        });
+            })
+            .catch(e => {
+                this.setState({
+                    products: [],
+                    prodCount: 0,
+                });
+            })
     }
 
     favClick = (title: string) => {
