@@ -8,9 +8,6 @@ interface IProductListProps {
 }
 
 export default class ProductList extends React.Component<IProductListProps, {}> {
-    constructor(props: any) {
-        super(props);
-    }
     render() {
         const { products } = this.props;
 
