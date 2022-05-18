@@ -27,9 +27,9 @@ describe("example to-do app", () => {
         cy.wait(5000);
 
         cy.get(".productList").children().its("length").should("be.gte", 0);
-        cy.get(".favouriteButton0").click();
+        cy.get(".favoriteButton0").click();
         cy.wait(100);
-        cy.get(".favouriteCount").contains(1);
+        cy.get(".favoriteCount").contains(1);
         // cy.get(".todo-list li").should("have.length", 2);
 
         // // We can go even further and check that the default todos each contain

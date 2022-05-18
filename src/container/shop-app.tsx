@@ -158,7 +158,7 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
                             </span>
                             {" - "}
                             <span>
-                                {Constants.NUMBER_OF_FAVORITES} <span className="favouriteCount">{numFavorites}</span>
+                                {Constants.NUMBER_OF_FAVORITES} <span className="favoriteCount">{numFavorites}</span>
                             </span>
                         </div>
                         {products && !!products.length && <ProductList products={products} onFav={(title: string) => this.favClick(title)} />}
