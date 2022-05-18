@@ -9,30 +9,28 @@ type IFormProps = {
 };
 
 export const Form: React.FC<IFormProps> = (props) => {
-    let formRef = React.useRef<HTMLFormElement>(null);
-    let titleRef = React.useRef<HTMLInputElement>(null);
-    let priceRef = React.useRef<HTMLInputElement>(null);
-    let descriptionRef = React.useRef<HTMLTextAreaElement>(null);
+    const formRef = React.useRef<HTMLFormElement>(null);
+    const titleRef = React.useRef<HTMLInputElement>(null);
+    const priceRef = React.useRef<HTMLInputElement>(null);
+    const descriptionRef = React.useRef<HTMLTextAreaElement>(null);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
 
         if (!titleRef.current?.value) {
             alert(Constants.YOUR_PRODUCT_NEEDS_A_TITLE);
-
             return;
         }
 
         if (!descriptionRef.current?.value || !priceRef.current?.value) {
             alert(Constants.YOUR_PRODUCT_NEEDS_SOME_CONTENT);
-
             return;
         }
 
         props["on-submit"]({
-            title: titleRef.current && titleRef.current.value,
-            description: descriptionRef.current && descriptionRef.current.value,
-            price: priceRef.current && priceRef.current.value,
+            title: titleRef.current.value,
+            description: descriptionRef.current.value,
+            price: priceRef.current.value,
         });
 
         formRef.current?.reset();
