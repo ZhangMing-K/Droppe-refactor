@@ -1,77 +1,101 @@
 .header {
-  background: #ffffff;
+    background: #ffffff;
 }
 
 .headerImageWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
 }
 
 .headerImage {
-  height: 60px;
+    height: 60px;
 }
 
-.main {
-  padding: 32px 0;
+.subContainer {
+    padding: 32px 0;
+}
+
+.productsFullContainer {
+    padding-bottom: 32px;
+}
+
+.container {
+    max-width: 750px;
+    margin: auto;
+}
+
+.logoImageContainer {
+    margin: 50px inherit;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.logo1 {
+    max-height: 15em;
+    display: block;
+}
+
+.logo2 {
+    max-height: 15rem;
+    display: block;
 }
 
 .buttonWrapper {
-  margin-bottom: 24px;
+    margin-bottom: 24px;
 }
 
 .messageContainer {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
 }
 
 .statsContainer {
-  margin-bottom: 24px;
+    margin-bottom: 24px;
 }
 
 .reactModalContent {
-  font-family: "Open Sans";
-  position: absolute;
-  top: 120px;
-  left: 0;
-  right: 0;
-  bottom: 120px;
-  width: 750px;
-  height: auto;
-  margin: 0 auto;
-  background: #ffffff;
-  border: none;
-  border-radius: 0;
-  outline: none;
-  padding: 24px;
-  overflow: auto;
+    font-family: "Open Sans";
+    position: absolute;
+    top: 120px;
+    left: 0;
+    right: 0;
+    width: 750px;
+    height: auto;
+    margin: 0 auto;
+    background: #ffffff;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    padding: 24px;
+    overflow: auto;
 }
 
 .reactModalOverlay {
-  font-family: "Open Sans";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+    font-family: "Open Sans";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }
 
 .modalContentHelper {
-  position: relative;
-  height: 100%;
-  padding: 64px 0;
+    position: relative;
+    height: 100%;
+    padding: 64px 0px 10px 0px;
 }
 
 .modalClose {
-  cursor: pointer;
-  color: rgba(0, 0, 0, 1);
-  font-size: 24px;
-  line-height: 0;
-  position: absolute;
-  top: 0;
-  right: 0;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 1);
+    font-size: 24px;
+    line-height: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
