@@ -88,6 +88,10 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
             message: Constants.ADDING_PRODUCT,
         });
 
+        this.addProduct(payload);
+    };
+
+    addProduct = (payload: { title: string; description: string; price: string }) => {
         // **this POST request doesn't actually post anything to any database**
         fetch(Constants.API_PRODUCTS_LINK, {
             method: "POST",
@@ -104,7 +108,7 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
                     message: "",
                 });
             });
-    };
+    }
 
     closeModal = () => {
         this.setState({
@@ -126,14 +130,14 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
                 <div className={styles.container}>
                     <div className={styles.header}>
                         <div className={styles.headerImageWrapper}>
-                            <img src={logo} className={styles.headerImage} />
+                            <img src={logo} alt="droppe-logo" className={styles.headerImage} />
                         </div>
                     </div>
 
                     <>
                         <span className={clsx(styles.subContainer, styles.logoImageContainer)}>
-                            <img src={intro1} className={styles.logo1} />
-                            <img src={intro2} className={styles.logo2} />
+                            <img src={intro1} alt="droppe-intro-1" className={styles.logo1} />
+                            <img src={intro2} alt="droppe-intro-2" className={styles.logo2} />
                         </span>
                     </>
 
@@ -164,7 +168,7 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
                                 {Constants.NUMBER_OF_FAVORITES} <span className="favoriteCount">{numFavorites}</span>
                             </span>
                         </div>
-                        {products && !!products.length && <ProductList products={products} onFav={(title: string) => this.favClick(title)} />}
+                        {products && !!products.length && <ProductList products={products} onFav={this.favClick} />}
                     </div>
                 </div>
 
@@ -180,7 +184,7 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
                                 <FaTimes />
                             </div>
 
-                            <Form on-submit={(payload) => this.onSubmit(payload)} />
+                            <Form on-submit={this.onSubmit} />
                         </div>
                     </Modal>
                 </>
