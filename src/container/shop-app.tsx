@@ -1,13 +1,15 @@
 import * as React from "react";
-import lodash from "lodash";
+import clsx from "clsx";
+import * as _ from "lodash";
+
 import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
 import { Button } from "../components/Button/button";
 import ProductList from "../components/Product-List/product-list-components";
 import { Form } from "../components/Form/form";
-import logo from "./images/droppe-logo.png";
-import img1 from "./images/img1.png";
-import img2 from "./images/img2.png";
+import logo from "../images/droppe-logo.png";
+import intro1 from "../images/intro1.png";
+import intro2 from "../images/intro2.png";
 import styles from "./shopApp.module.css";
 import * as Constants from "../constants";
 
@@ -24,9 +26,6 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
     constructor(props: any) {
         super(props);
 
-        this.favClick = this.favClick.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
         this.state = { products: [], isOpen: false, isShowingMessage: false, message: "", numFavorites: 0, prodCount: 0 };
     }
 
@@ -42,28 +41,36 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
                     prodCount: productsResponse.length,
                 });
             });
+
+            jsonResponse.catch(() => {
+                console.log("Api Call Issue");
+            });
         });
     }
 
-    favClick(title: string) {
-        const prods = this.state.products;
-        const idx = lodash.findIndex(prods, { title: title });
-        let currentFavs = this.state.numFavorites;
+    favClick = (title: string) => {
+        const { products, numFavorites } = this.state;
+
+        let cProducts = _.clone(products);
+        const idx = _.findIndex(cProducts, { title: title });
+        let currentFavs = numFavorites;
         let totalFavs: any;
 
-        if (prods[idx].isFavorite) {
-            prods[idx].isFavorite = false;
+        if (cProducts[idx].isFavorite) {
+            cProducts[idx].isFavorite = false;
             totalFavs = --currentFavs;
         } else {
             totalFavs = ++currentFavs;
-            prods[idx].isFavorite = true;
+            cProducts[idx].isFavorite = true;
         }
 
-        this.setState(() => ({ products: prods, numFavorites: totalFavs }));
-    }
+        this.setState({ products: cProducts, numFavorites: totalFavs });
+    };
 
-    onSubmit(payload: { title: string; description: string; price: string }) {
-        const updated = lodash.clone(this.state.products);
+    onSubmit = (payload: { title: string; description: string; price: string }) => {
+        const { products } = this.state;
+        const updated = _.clone(products);
+
         updated.push({
             title: payload.title,
             description: payload.description,
@@ -72,16 +79,10 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
 
         this.setState({
             products: updated,
-            prodCount: lodash.size(this.state.products) + 1,
-        });
-
-        this.setState({
+            prodCount: _.size(products) + 1,
             isOpen: false,
-        });
-
-        this.setState({
             isShowingMessage: true,
-            message: "Adding product...",
+            message: Constants.ADDING_PRODUCT,
         });
 
         // **this POST request doesn't actually post anything to any database**
@@ -95,61 +96,73 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
         })
             .then((res) => res.json())
             .then((json) => {
-                (function (t) {
-                    setTimeout(() => {
-                        t.setState({
-                            isShowingMessage: false,
-                            message: "",
-                        });
-                    }, 2000);
-                })(this);
+                this.setState({
+                    isShowingMessage: false,
+                    message: "",
+                });
             });
-    }
+    };
+
+    closeModal = () => {
+        this.setState({
+            isOpen: false,
+        });
+    };
+
+    openModal = () => {
+        this.setState({
+            isOpen: true,
+        });
+    };
 
     render() {
-        const { products, isOpen } = this.state;
+        const { products, isOpen, isShowingMessage, message, prodCount, numFavorites } = this.state;
+
         return (
             <React.Fragment>
-                <div className={styles.header}>
-                    <div className={["container", styles.headerImageWrapper].join(" ")}>
-                        <img src={logo} className={styles.headerImage} />
+                <div className={styles.container}>
+                    <div className={styles.header}>
+                        <div className={styles.headerImageWrapper}>
+                            <img src={logo} className={styles.headerImage} />
+                        </div>
                     </div>
-                </div>
 
-                <>
-                    <span className={["container", styles.main].join(" ")} style={{ margin: "50px inherit", display: "flex", justifyContent: "space-evenly" }}>
-                        <img src={img1} style={{ maxHeight: "15em", display: "block" }} />
-                        <img src={img2} style={{ maxHeight: "15rem", display: "block" }} />
-                    </span>
-                </>
-
-                <div className={["container", styles.main].join(" ")} style={{ paddingTop: 0 }}>
-                    <div className={styles.buttonWrapper}>
-                        <span role="button">
-                            <Button
-                                onClick={function (this: any) {
-                                    this.setState({
-                                        isOpen: true,
-                                    });
-                                }.bind(this)}
-                            >
-                                Send product proposal
-                            </Button>
+                    <>
+                        <span className={clsx(styles.subContainer, styles.logoImageContainer)}>
+                            <img src={intro1} className={styles.logo1} />
+                            <img src={intro2} className={styles.logo2} />
                         </span>
-                        {this.state.isShowingMessage && (
-                            <div className={styles.messageContainer}>
-                                <i>{this.state.message}</i>
-                            </div>
-                        )}
-                    </div>
+                    </>
 
-                    <div className={styles.statsContainer}>
-                        <span>Total products: {this.state.prodCount}</span>
-                        {" - "}
-                        <span>Number of favorites: {this.state.numFavorites}</span>
-                    </div>
+                    <div className={styles.productsFullContainer}>
+                        <div className={styles.buttonWrapper}>
+                            <span role="button">
+                                <Button
+                                    onClick={() => {
+                                        this.openModal();
+                                    }}
+                                >
+                                    {Constants.SEND_PRODUCT_PROPOSAL}
+                                </Button>
+                            </span>
+                            {isShowingMessage && (
+                                <div className={styles.messageContainer}>
+                                    <i>{message}</i>
+                                </div>
+                            )}
+                        </div>
 
-                    {products && !!products.length ? <ProductList products={products} onFav={this.favClick} /> : <div></div>}
+                        <div className={styles.statsContainer}>
+                            <span>
+                                {Constants.TOTAL_PRODUCTS} {prodCount}
+                            </span>
+                            {" - "}
+                            <span>
+                                {Constants.NUMBER_OF_FAVORITES} <span className="favouriteCount">{numFavorites}</span>
+                            </span>
+                        </div>
+                        {products && !!products.length && <ProductList products={products} onFav={(title: string) => this.favClick(title)} />}
+                    </div>
                 </div>
 
                 <>
@@ -157,16 +170,14 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
                         <div className={styles.modalContentHelper}>
                             <div
                                 className={styles.modalClose}
-                                onClick={function (this: any) {
-                                    this.setState({
-                                        isOpen: false,
-                                    });
-                                }.bind(this)}
+                                onClick={() => {
+                                    this.closeModal();
+                                }}
                             >
                                 <FaTimes />
                             </div>
 
-                            <Form on-submit={this.onSubmit} />
+                            <Form on-submit={(payload) => this.onSubmit(payload)} />
                         </div>
                     </Modal>
                 </>
