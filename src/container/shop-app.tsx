@@ -148,6 +148,7 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
                                     onClick={() => {
                                         this.openModal();
                                     }}
+                                    dataTestId="btn-open-new-product"
                                 >
                                     {Constants.SEND_PRODUCT_PROPOSAL}
                                 </Button>
@@ -161,11 +162,11 @@ export class ShopApp extends React.Component<{}, IShopAppProps> {
 
                         <div className={styles.statsContainer}>
                             <span>
-                                {Constants.TOTAL_PRODUCTS} {prodCount}
+                                {Constants.TOTAL_PRODUCTS} <span data-test='prod-total-count'> {prodCount} </span>
                             </span>
                             {" - "}
                             <span>
-                                {Constants.NUMBER_OF_FAVORITES} <span className="favoriteCount">{numFavorites}</span>
+                                {Constants.NUMBER_OF_FAVORITES} <span data-test="favoriteCount">{numFavorites}</span>
                             </span>
                         </div>
                         {products && !!products.length && <ProductList products={products} onFav={this.favClick} />}

@@ -22,7 +22,12 @@ export const Form: React.FC<IFormProps> = (props) => {
             return;
         }
 
-        if (!descriptionRef.current?.value || !priceRef.current?.value) {
+        if (!priceRef.current?.value) {
+            alert(Constants.YOUR_PRODUCT_NEEDS_PRICE);
+            return;
+        }
+
+        if (!descriptionRef.current?.value) {
             alert(Constants.YOUR_PRODUCT_NEEDS_SOME_CONTENT);
             return;
         }
@@ -40,15 +45,15 @@ export const Form: React.FC<IFormProps> = (props) => {
         <form className={styles.form} onSubmit={(event) => handleSubmit(event)} ref={formRef}>
             <span className={styles.label}>{Constants.PRODUCT_TITLE}</span>
 
-            <input ref={titleRef} placeholder={Constants.TITLE_PLACE_HOLDER} defaultValue="" className={styles.input} />
+            <input ref={titleRef} name='product-title' placeholder={Constants.TITLE_PLACE_HOLDER} defaultValue="" className={styles.input} />
 
             <span className={styles.label}>{Constants.PRODUCT_DETAIL_LABEL}</span>
 
-            <input ref={priceRef} placeholder={Constants.PRICE_PLACE_HOLDER} defaultValue="" className={styles.input} />
+            <input ref={priceRef} name='product-price' placeholder={Constants.PRICE_PLACE_HOLDER} defaultValue="" className={styles.input} />
 
-            <textarea ref={descriptionRef} placeholder={Constants.START_TYPING_PRODUCT_DESCRIPTION_HERE_PLACE_HOLDER} defaultValue="" className={styles.textarea} />
+            <textarea ref={descriptionRef} name='product-price' placeholder={Constants.START_TYPING_PRODUCT_DESCRIPTION_HERE_PLACE_HOLDER} defaultValue="" className={styles.textarea} />
 
-            <Button>{Constants.ADD_A_PRODUCT}</Button>
+            <Button dataTestId='btn-add-new-product'>{Constants.ADD_A_PRODUCT}</Button>
         </form>
     );
 };

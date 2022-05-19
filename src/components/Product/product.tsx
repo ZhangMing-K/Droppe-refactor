@@ -39,7 +39,8 @@ export const Product: React.FC<IProductProps> = ({ product, onFav, index }) => {
 
             <span className={styles.actionBar}>
                 <div
-                    className={clsx(styles.actionBarItem, product.isFavorite && styles.active, "favoriteButton")}
+                    className={clsx(styles.actionBarItem, product.isFavorite && styles.active)}
+                    data-test="favoriteButton"
                     role="button"
                     onClick={() => {
                         onFav(product.title);

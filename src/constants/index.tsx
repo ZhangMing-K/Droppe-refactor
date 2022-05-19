@@ -10,6 +10,7 @@ export const PRICE_PLACE_HOLDER = "Price...";
 export const TITLE_PLACE_HOLDER = "Title...";
 export const PRODUCT_DETAIL_LABEL = "Product details: *";
 export const YOUR_PRODUCT_NEEDS_A_TITLE = "Your product needs a title";
+export const YOUR_PRODUCT_NEEDS_PRICE = "Your product needs price";
 export const YOUR_PRODUCT_NEEDS_SOME_CONTENT = "Your product needs some content";
 export const REMOVE_FROM_FAVORITES = "Remove from favorites";
 export const ADD_TO_FAVORITES = "Add to favorites";
